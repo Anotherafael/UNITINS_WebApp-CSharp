@@ -1,4 +1,4 @@
-# web Application in C# (with Entity Framework)
+# Web Application in C# (with Entity Framework)
 
 Um projeto desenvolvido para concluir o a discplina de Tópicos de Programação III na Universidade Estadual do Tocantins (UNITINS)
 
@@ -24,8 +24,11 @@ Sua função principal é gerenciar as atividades de reserva de quartos/apartame
 ## OBS: É necessário a instalação do VisualStudio e SQLServer.
 
 1️⃣ Primeiro faça a extração do conteúdo desse git.
+
 2️⃣ Execute a aplicação 'a1-hotel.sln'
+
 3️⃣ Execute no Package Manager Console o código: 'Update-Database'. Para assim criar o banco de dados a partir da migration.
+
 4️⃣ Compile o projeto. 👍
 
  
