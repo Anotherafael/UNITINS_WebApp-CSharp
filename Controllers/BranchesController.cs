@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -50,13 +51,13 @@ namespace a1_hotel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,Email,Address,PhoneNumber")] Branch branch)
         {
-            if (checkIfEmailAlreadyExists(branch.Email))
+            if (checkIfEmailAlreadyExists(branch.Email, branch.ID))
             {
                 ModelState.AddModelError("", "Esse e-mail já possui cadastro no sistema.");
                 return View(branch);
             }
 
-            if (checkIfPhoneNumberAlreadyExists(branch.PhoneNumber))
+            if (checkIfPhoneNumberAlreadyExists(branch.PhoneNumber, branch.ID))
             {
                 ModelState.AddModelError("", "Esse número de telefone já possui cadastro no sistema.");
                 return View(branch);
@@ -95,13 +96,13 @@ namespace a1_hotel.Controllers
         public ActionResult Edit([Bind(Include = "ID,Name,Email,Address,PhoneNumber")] Branch branch)
         {
 
-            if (checkIfEmailAlreadyExists(branch.Email))
+            if (checkIfEmailAlreadyExists(branch.Email, branch.ID))
             {
                 ModelState.AddModelError("", "Esse e-mail já possui cadastro no sistema.");
                 return View(branch);
             }
 
-            if (checkIfPhoneNumberAlreadyExists(branch.PhoneNumber))
+            if (checkIfPhoneNumberAlreadyExists(branch.PhoneNumber, branch.ID))
             {
                 ModelState.AddModelError("", "Esse número de telefone já possui cadastro no sistema.");
                 return View(branch);
@@ -109,7 +110,7 @@ namespace a1_hotel.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Entry(branch).State = EntityState.Modified;
+                db.Branchs.AddOrUpdate(branch);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -151,14 +152,37 @@ namespace a1_hotel.Controllers
             base.Dispose(disposing);
         }
 
-        public bool checkIfEmailAlreadyExists(string email)
+        public bool checkIfEmailAlreadyExists(string email, int id)
         {
-            return db.Branchs.Any(b => b.Email == email) || db.Clients.Any(c => c.Email == email);
+            if (db.Clients.Any(c => c.Email == email))
+            {
+                Client clien = db.Clients.Where(c => c.Email == email).First();
+                if (clien.ID != id) return true;
+            }
+
+            if (db.Branchs.Any(c => c.Email == email))
+            {
+                Branch branch = db.Branchs.Where(c => c.Email == email).First();
+                if (branch.ID != id) return true;
+            }
+
+            return false;
         }
 
-        public bool checkIfPhoneNumberAlreadyExists(string phoneNumber)
+        public bool checkIfPhoneNumberAlreadyExists(string phoneNumber, int id)
         {
-            return db.Branchs.Any(b => b.PhoneNumber == phoneNumber) || db.Clients.Any(c => c.PhoneNumber == phoneNumber);
+            if (db.Clients.Any(c => c.PhoneNumber == phoneNumber))
+            {
+                Client clien = db.Clients.Where(c => c.PhoneNumber == phoneNumber).First();
+                if (clien.ID != id) return true;
+            }
+
+            if (db.Branchs.Any(c => c.PhoneNumber == phoneNumber))
+            {
+                Branch branch = db.Branchs.Where(c => c.PhoneNumber == phoneNumber).First();
+                if (branch.ID != id) return true;
+            }
+            return false;
         }
     }
 }
