@@ -51,13 +51,13 @@ namespace a1_hotel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,Email,Address,PhoneNumber")] Branch branch)
         {
-            if (checkIfEmailAlreadyExists(branch.Email, branch.ID))
+            if (checkIfEmailAlreadyExists(branch.Email, 0))
             {
                 ModelState.AddModelError("", "Esse e-mail já possui cadastro no sistema.");
                 return View(branch);
             }
 
-            if (checkIfPhoneNumberAlreadyExists(branch.PhoneNumber, branch.ID))
+            if (checkIfPhoneNumberAlreadyExists(branch.PhoneNumber, 0))
             {
                 ModelState.AddModelError("", "Esse número de telefone já possui cadastro no sistema.");
                 return View(branch);

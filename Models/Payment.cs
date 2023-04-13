@@ -9,7 +9,7 @@ namespace a1_hotel.Models
 
     public enum PaymentStatus
     {
-        Aguardando, Negado, Aprovado
+        Aguardando, Aprovado, Negado
     }
     public class Payment
     {
@@ -37,6 +37,21 @@ namespace a1_hotel.Models
             this.BookingID = booking.ID;
             this.PaymentStatus = PaymentStatus.Aguardando;
             this.Booking = booking;
+        }
+
+        public Payment (Booking booking, int status)
+        {
+            this.Price = booking.Price;
+            this.CreatedAt = booking.EntryDate;
+            this.BookingID = booking.ID;
+            this.Booking = booking;
+            if (status == 0) PaymentStatus = PaymentStatus.Aguardando;
+            else if (status == 1) {
+                this.PaymentDate = booking.EntryDate;
+                PaymentStatus = PaymentStatus.Aprovado;
+            }
+            else if (status == 2) PaymentStatus = PaymentStatus.Negado;
+            else PaymentStatus = PaymentStatus.Negado;
         }
     }
 }

@@ -41,5 +41,18 @@ namespace a1_hotel.Models
         public Booking() {
         }
 
+        public Booking(DateTime entryDate, DateTime departureDate, int guests, double price, int clientID, int roomID, int status)
+        {
+            EntryDate = entryDate;
+            DepartureDate = departureDate;
+            Guests = guests;
+            Price = price;
+            ClientID = clientID;
+            RoomID = roomID;
+            if (status == 0) Status = BookingStatus.Pendente;
+            else if (status == 1) Status = BookingStatus.Aprovado;
+            else if (status == 2) Status = BookingStatus.Cancelado;
+            else Status = BookingStatus.Cancelado;
+        }
     }
 }
