@@ -25,10 +25,12 @@ Sua função principal é gerenciar as atividades de reserva de quartos/apartame
 
 1️⃣ Primeiro faça a extração do conteúdo desse git.
 
-2️⃣ Execute a aplicação 'a1-hotel.sln'
+2️⃣ Execute a aplicação 'a1-hotel.sln'.
 
-3️⃣ Execute no Package Manager Console o código: 'Update-Database'. Para assim criar o banco de dados a partir da migration.
+3️⃣ Altere no web.config para o endereço de conexão do SQL Server da sua máquina 'Data Source'.
 
-4️⃣ Compile o projeto. 👍
+4️⃣ Execute no Package Manager Console o código: 'Update-Database'. Para assim criar o banco de dados a partir da migration.
+
+5️⃣ Compile o projeto. 👍
 
  
